@@ -1,4 +1,4 @@
-# aoc2022
+# Advent of Code 2022
 
 My solutions for Advent of Code 2022 written in Haskell based on the template from Sam Coy which can be found [here](https://github.com/samcoy3/advent-of-code-template/releases/tag/2021).
 
