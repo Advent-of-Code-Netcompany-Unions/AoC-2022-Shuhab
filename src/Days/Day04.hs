@@ -10,7 +10,6 @@ import qualified Data.Set as Set
 import Data.Vector (Vector)
 import qualified Data.Vector as Vec
 import qualified Util.Util as U
-import Control.Lens
 
 import qualified Program.RunDay as R (runDay, Day)
 import Data.Attoparsec.Text
