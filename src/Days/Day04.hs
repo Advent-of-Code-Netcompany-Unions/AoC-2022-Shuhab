@@ -10,6 +10,7 @@ import qualified Data.Set as Set
 import Data.Vector (Vector)
 import qualified Data.Vector as Vec
 import qualified Util.Util as U
+import Control.Lens
 
 import qualified Program.RunDay as R (runDay, Day)
 import Data.Attoparsec.Text
@@ -20,20 +21,31 @@ runDay :: R.Day
 runDay = R.runDay inputParser partA partB
 
 ------------ PARSER ------------
+ranges :: Parser (Set Int, Set Int) 
+ranges = do
+    s1 <- decimal
+    char '-'
+    e1 <- decimal
+    char ','
+    s2 <- decimal
+    char '-'
+    e2 <- decimal
+    return (Set.fromList [s1..e1], Set.fromList [s2..e2])
+
 inputParser :: Parser Input
-inputParser = error "Not implemented yet!"
+inputParser = ranges `sepBy` endOfLine
 
 ------------ TYPES ------------
-type Input = Void
+type Input = [(Set Int, Set Int)]
 
-type OutputA = Void
+type OutputA = Int
 
-type OutputB = Void
+type OutputB = Int
 
 ------------ PART A ------------
 partA :: Input -> OutputA
-partA = error "Not implemented yet!"
+partA = length . filter id . fmap (\(s1, s2) -> Set.isSubsetOf s1 s2 || Set.isSubsetOf s2 s1)
 
 ------------ PART B ------------
 partB :: Input -> OutputB
-partB = error "Not implemented yet!"
+partB = length . filter (not . null) . fmap (uncurry Set.intersection)
