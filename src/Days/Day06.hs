@@ -1,7 +1,7 @@
 module Days.Day06 (runDay) where
 
 {- ORMOLU_DISABLE -}
-import Data.List
+import Data.List as L
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 import Data.Maybe
@@ -21,19 +21,28 @@ runDay = R.runDay inputParser partA partB
 
 ------------ PARSER ------------
 inputParser :: Parser Input
-inputParser = error "Not implemented yet!"
+inputParser = many1 letter
 
 ------------ TYPES ------------
-type Input = Void
+type Input = [Char]
 
-type OutputA = Void
+type OutputA = Int
 
-type OutputB = Void
+type OutputB = Int
 
 ------------ PART A ------------
+findSignal :: Int -> Input -> OutputA
+findSignal n = (+n) . head . elemIndices n . map (length . nub . L.take n) . tails
+
+findStartOfPacketMarker :: Input -> OutputA
+findStartOfPacketMarker = findSignal 4
+
 partA :: Input -> OutputA
-partA = error "Not implemented yet!"
+partA = findStartOfPacketMarker
 
 ------------ PART B ------------
+findStartOfMessageMarker :: Input -> OutputA
+findStartOfMessageMarker = findSignal 14
+
 partB :: Input -> OutputB
-partB = error "Not implemented yet!"
+partB = findStartOfMessageMarker 
