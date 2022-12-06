@@ -1,7 +1,7 @@
 module Days.Day02 (runDay) where
 
 {- ORMOLU_DISABLE -}
-import Data.List
+import Data.List as L
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 import Data.Maybe
@@ -13,7 +13,14 @@ import qualified Util.Util as U
 
 import qualified Program.RunDay as R (runDay, Day)
 import Data.Attoparsec.Text
-import Data.Void
+    ( sepBy, space, char, endOfLine, Parser )
+import Data.Void ()
+import Data.Functor ( ($>) )
+import Control.Applicative ( Alternative((<|>)) )
+import Util.Parsers ( around )
+import System.Console.ANSI (saveCursorCode)
+import Data.Char ( ord )
+import Data.Text
 {- ORMOLU_ENABLE -}
 
 runDay :: R.Day
@@ -21,19 +28,24 @@ runDay = R.runDay inputParser partA partB
 
 ------------ PARSER ------------
 inputParser :: Parser Input
-inputParser = error "Not implemented yet!"
+inputParser = ((opponent <|> you) `around` space) `sepBy` endOfLine
+  where
+    opponent = (\o -> ord o - ord 'A') <$> (char 'A' <|> char 'B' <|> char 'C') 
+    you = (\y -> ord y - ord 'X') <$> (char 'X' <|> char 'Y' <|> char 'Z')
 
 ------------ TYPES ------------
-type Input = Void
 
-type OutputA = Void
+type Input = [(Int, Int)]
 
-type OutputB = Void
+type OutputA = Int
+
+type OutputB = Int
 
 ------------ PART A ------------
+
 partA :: Input -> OutputA
-partA = error "Not implemented yet!"
+partA = sum . L.map (\(o, y) -> 3 * ((y - o + 1) `mod` 3) + (y + 1))
 
 ------------ PART B ------------
 partB :: Input -> OutputB
-partB = error "Not implemented yet!"
+partB = sum . L.map (\(o, y) -> (y * 3) + ((o + y + 2) `mod` 3) + 1)
