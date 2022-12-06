@@ -24,7 +24,7 @@ inputParser :: Parser Input
 inputParser = many1 letter
 
 ------------ TYPES ------------
-type Input = [Char]
+type Input = String
 
 type OutputA = Int
 
