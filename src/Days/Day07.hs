@@ -21,7 +21,7 @@ runDay = R.runDay inputParser partA partB
 
 ------------ PARSER ------------
 inputParser :: Parser Input
-inputParser = error "Not implemented yet!"
+inputParser = error "Not implemented yet!" 
 
 ------------ TYPES ------------
 type Input = Void
